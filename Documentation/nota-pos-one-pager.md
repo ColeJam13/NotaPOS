@@ -39,7 +39,7 @@ Over the course of nearly two decades in the restaurant industry, I have worked 
 - Full-stack application with Spring Boot backend
 - SQLite database with orders and items
 - Fully operational POS system that matches industry standards
-- Server-Savior feature: delay system on eacg order to prevent multiple ticket revisions from making it to the kitchen
+- Server-Savior feature: delay system on each order to prevent multiple ticket revisions from making it to the kitchen
 
 **Phase 2 Future Features:**
 - Kitchen display system integration
@@ -49,7 +49,7 @@ Over the course of nearly two decades in the restaurant industry, I have worked 
 
 **Phase 3 Stretch Goals:**
 - Localized hardware for data hosting to prevent any downtime
-- Personal knowledge database written in plain langauge for troubleshooting. without endless customer service phone calls
+- Personal knowledge database written in plain langauge for troubleshooting without endless customer service phone calls
 - Inventory tracking by analyzing items sold for both FoH and BoH stocking
 
 ---
