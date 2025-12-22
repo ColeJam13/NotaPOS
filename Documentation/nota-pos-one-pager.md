@@ -37,7 +37,7 @@ Over the course of nearly two decades in the restaurant industry, I have worked 
 
 **Phase 1 In Progress:**
 - Full-stack application with Spring Boot backend
-- SQLite database with orders and items
+- SQLite3 database with orders and items
 - Fully operational POS system that matches industry standards
 - Server-Savior feature: delay system on each order to prevent multiple ticket revisions from making it to the kitchen
 
