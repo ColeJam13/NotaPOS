@@ -60,6 +60,6 @@ Over the course of nearly two decades in the restaurant industry, I have worked 
 
 ## Contact & Portfolio
 
-Project Repository: https://github.com/ColeJam13/NotaPOS
-Developer: Cole Jamison - Zip Code Wilmington Graduate / 20 year industry veteran
-Portfolio: https://github.com/ColeJam13
+- Project Repository: https://github.com/ColeJam13/NotaPOS
+- Developer: Cole Jamison - Zip Code Wilmington Student / 20 year restaurant industry veteran
+- Portfolio: https://github.com/ColeJam13
