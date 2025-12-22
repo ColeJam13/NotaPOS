@@ -39,7 +39,7 @@ Over the course of nearly two decades in the restaurant industry, I have worked 
 - Full-stack application with Spring Boot backend
 - SQLite database with orders and items
 - Fully operational POS system that matches industry standards
-- Server-Savior feature: delay system on order to prevent multiple ticket revisions from making it to the kitchen
+- Server-Savior feature: delay system on eacg order to prevent multiple ticket revisions from making it to the kitchen
 
 **Phase 2 Future Features:**
 - Kitchen display system integration
