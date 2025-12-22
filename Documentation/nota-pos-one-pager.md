@@ -29,7 +29,7 @@ Over the course of nearly two decades in the restaurant industry, I have worked 
 ## Technical Approach
 
 **MVP Scope:**
-- Core POS functionality: orders, items, payments
+- Core POS functionality: floor map, orders, items, modifiers
 - Clean, fast UI designed for touch screens
 - Industry-standard features without unnecessary complexity
 
