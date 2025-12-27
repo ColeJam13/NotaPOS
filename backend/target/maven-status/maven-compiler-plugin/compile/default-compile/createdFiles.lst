@@ -1,2 +1,3 @@
 com/notapos/NotaPosApplication.class
 com/notapos/entity/RestaurantTable.class
+com/notapos/repository/TableRepository.class
