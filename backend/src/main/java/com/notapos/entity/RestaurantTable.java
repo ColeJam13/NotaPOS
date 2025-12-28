@@ -42,6 +42,10 @@ public class RestaurantTable {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @PrePersist                                     // PrePersist means runs BEFORE saving to database
     protected void onCreate() {
         createdAt = LocalDateTime.now();            // automatically sets createdAt timestamp
