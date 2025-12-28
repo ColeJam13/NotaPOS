@@ -1,10 +1,14 @@
 package com.notapos.entity;
 
-import jakarta.persistence.*;                   // JPA annotations
-import lombok.AllArgsConstructor;               // Lombok generates boilerplate code
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+import java.time.LocalDateTime;                   // JPA annotations
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 /**
  * Entity representing a physical table in the restaurant.
@@ -17,9 +21,7 @@ import java.time.LocalDateTime;
 
 @Entity                                     // Tells JPA "this is a database table"
 @Table(name = "tables")                     // table name in database is "tables"
-@Data                                       // Lombok autogenerates (Getters, Setters, toString(), equals(), and hashCode() methods)
-@NoArgsConstructor                          // Lombok Generates empty constructor (new RestaurantTable() )
-@AllArgsConstructor                         // Lombok Generates constructor with all fields (new RestaurantTable(id, number, etc...) )
+
 public class RestaurantTable {
 
     @Id                                                         // Primary key
@@ -42,12 +44,54 @@ public class RestaurantTable {
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    public RestaurantTable() {}
+
+    public Long getTableId() {
+        return tableId;
+    }
+
+    public void setTableId(Long tableId) {
+        this.tableId = tableId;
+    }
+
+    public String getTableNumber() {
+        return tableNumber;
+    }
+
+    public void setTableNumber(String tableNumber) {
+        this.tableNumber = tableNumber;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+    public Integer getSeatCount() {
+        return seatCount;
+    }
+
+    public void setSeatCount(Integer seatCount) {
+        this.seatCount = seatCount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
     public void setStatus(String status) {
         this.status = status;
     }
 
-    @PrePersist                                     // PrePersist means runs BEFORE saving to database
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();            // automatically sets createdAt timestamp
+        createdAt = LocalDateTime.now();
     }
 }
