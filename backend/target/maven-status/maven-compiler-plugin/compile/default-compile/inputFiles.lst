@@ -3,4 +3,5 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/MenuItem.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/RestaurantTable.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/NotaPosApplication.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/MenuItemRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/TableRepository.java

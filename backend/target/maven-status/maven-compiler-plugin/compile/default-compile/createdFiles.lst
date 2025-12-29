@@ -1,4 +1,5 @@
 com/notapos/entity/MenuItem.class
+com/notapos/repository/MenuItemRepository.class
 com/notapos/controller/TableController.class
 com/notapos/NotaPosApplication.class
 com/notapos/entity/RestaurantTable.class
