@@ -7,4 +7,5 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/NotaPosApplication.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/MenuItemRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/TableRepository.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/OrderRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/MenuItemService.java
