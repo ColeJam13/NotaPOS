@@ -27,26 +27,26 @@ public class TableController {
         this.tableService = tableService;
     }
 
-    @GetMapping
+    @GetMapping                                                             // Get all tables
     public ResponseEntity<List<RestaurantTable>> getAllTables() {
         List<RestaurantTable> tables = tableService.getAllTables();
         return ResponseEntity.ok(tables);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")                                                                // Get table by ID
     public ResponseEntity<RestaurantTable> getTableById(@PathVariable Long id) {
         return tableService.getTableById(id)
                     .map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping                                                                                    // Create new table
     public ResponseEntity<RestaurantTable> createTable(@RequestBody RestaurantTable table) {
         RestaurantTable created = tableService.createTable(table);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @PutMapping("/{id}/status")
+    @PutMapping("/{id}/status")                                                         // Update table status
     public ResponseEntity<RestaurantTable> updateTableStatus(
             @PathVariable Long id,
             @RequestParam String status) {

@@ -29,7 +29,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping
+    @GetMapping                                                                 // Get all Orders
     public ResponseEntity<List<Order>> getAllOrders(
             @RequestParam(required = false) String status) {
 
@@ -39,14 +39,14 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")                                                    // Get order by ID
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
         return orderService.getOrderById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/table/{tableId}")
+    @GetMapping("/table/{tableId}")                                         // Get orders by table
     public ResponseEntity<List<Order>> getOrdersByTable(
             @PathVariable Long tableId,
             @RequestParam(required = false) String status) {
@@ -57,13 +57,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrdersByTable(tableId));
     }
 
-    @PostMapping
+    @PostMapping                                                                // Create new order
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         Order created = orderService.createOrder(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @PutMapping("/{id}/totals")
+    @PutMapping("/{id}/totals")                                                 // Update order Totals
     public ResponseEntity<Order> updateOrderTotals(
             @PathVariable Long id,
             @RequestParam BigDecimal subtotal,
@@ -76,7 +76,7 @@ public class OrderController {
         }
     }
 
-    @PutMapping("/{id}/complete")
+    @PutMapping("/{id}/complete")                                           // Mark order as complete
     public ResponseEntity<Order> completeOrder(@PathVariable Long id) {
         try {
             Order completed = orderService.completeOrder(id);
@@ -86,7 +86,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")                                                     // Delete order
     public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
         return ResponseEntity.noContent().build();

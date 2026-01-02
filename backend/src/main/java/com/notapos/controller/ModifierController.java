@@ -25,7 +25,7 @@ public class ModifierController {
         this.modifierService = modifierService;
     }
 
-    @GetMapping
+    @GetMapping                                                                     // Get all Modifiers
     public ResponseEntity<List<Modifier>> getAllModifiers(
             @RequestParam(required = false) Boolean active) {
 
@@ -35,14 +35,14 @@ public class ModifierController {
         return ResponseEntity.ok(modifierService.getAllModifiers());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")                                                            // Get modifier by ID
     public ResponseEntity<Modifier> getModifierById(@PathVariable Long id) {
         return modifierService.getModifierById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/group/{modifierGroupId}")
+    @GetMapping("/group/{modifierGroupId}")                                         // Get modifier by group
     public ResponseEntity<List<Modifier>> getModifiersByGroup(
             @PathVariable Long modifierGroupId,
             @RequestParam(required = false) Boolean active) {
@@ -53,13 +53,13 @@ public class ModifierController {
         return ResponseEntity.ok(modifierService.getModifiersByGroup(modifierGroupId));
     }
 
-    @PostMapping
+    @PostMapping                                                                            // Create new modifier
     public ResponseEntity<Modifier> createModifier(@RequestBody Modifier modifier) {
         Modifier created = modifierService.createModifier(modifier);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")                                            // Update existing modifier
     public ResponseEntity<Modifier> updateModifier(
             @PathVariable Long id,
             @RequestBody Modifier modifier) {
@@ -71,7 +71,7 @@ public class ModifierController {
         }
     }
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")                                                     // Delete existing modifier
     public ResponseEntity<Void> deleteModifier(@PathVariable Long id) {
         modifierService.deleteModifier(id);
         return ResponseEntity.noContent().build();

@@ -116,7 +116,7 @@ public class OrderItemController {
         }
     }
 
-    @PostMapping("/lock-expired")
+    @PostMapping("/lock-expired")                                                       // Lock and fire items when delay timer hits zero
     public ResponseEntity<List<OrderItem>> lockExpiredItems() {
         List<OrderItem> locked = orderItemService.lockAndFireExpiredItems();
         return ResponseEntity.ok(locked);

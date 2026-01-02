@@ -25,7 +25,7 @@ public class ModifierGroupController {
         this.modifierGroupService = modifierGroupService;
     }
 
-    @GetMapping
+    @GetMapping                                                                         // Get all modifier groups
     public ResponseEntity<List<ModifierGroup>> getAllModifierGroups(
             @RequestParam(required = false) Boolean active) {
 
@@ -35,20 +35,20 @@ public class ModifierGroupController {
         return ResponseEntity.ok(modifierGroupService.getAllModifierGroups());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")                                                                        // Get modifier group by ID
     public ResponseEntity<ModifierGroup> getModifierGroupById(@PathVariable Long id) {
         return modifierGroupService.getModifierGroupById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping                                                                                            // Create new modifier group
     public ResponseEntity<ModifierGroup> createModifierGroup(@RequestBody ModifierGroup modifierGroup) {
         ModifierGroup created = modifierGroupService.createModifierGroup(modifierGroup);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}")                                                                // Update existing modifier group
     public ResponseEntity<ModifierGroup> updateModifierGroup(
             @PathVariable Long id,
             @RequestBody ModifierGroup modifierGroup) {
@@ -60,7 +60,7 @@ public class ModifierGroupController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")                                                             // Delete existing modifier group
     public ResponseEntity<Void> deleteModifierGroup(@PathVariable Long id) {
         modifierGroupService.deleteModifierGroup(id);
         return ResponseEntity.noContent().build();
