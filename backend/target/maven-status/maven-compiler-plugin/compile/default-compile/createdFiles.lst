@@ -4,6 +4,7 @@ com/notapos/service/OrderService.class
 com/notapos/repository/OrderItemRepository.class
 com/notapos/controller/TableController.class
 com/notapos/entity/OrderItem.class
+com/notapos/service/MenuItemModifierGroupService.class
 com/notapos/repository/PrepStationRepository.class
 com/notapos/entity/Payment.class
 com/notapos/repository/PaymentRepository.class
