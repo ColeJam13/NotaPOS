@@ -2,6 +2,7 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/OrderItemService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/NotaPosApplication.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/controller/PrepStationController.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/PaymentRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/OrderService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/OrderRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/PrepStation.java
@@ -20,6 +21,7 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/OrderItemRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/ModifierGroupService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/ModifierGroupRepository.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/PaymentService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/TableService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/ModifierRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/MenuItem.java
