@@ -13,6 +13,7 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/MenuItemModifierGroup.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/Payment.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/TableStatusLog.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/OrderItemModifierService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/MenuItemRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/controller/ModifierGroupController.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/PrepStationRepository.java
