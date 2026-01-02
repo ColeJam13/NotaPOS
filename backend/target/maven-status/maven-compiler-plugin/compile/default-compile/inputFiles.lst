@@ -8,6 +8,7 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/RestaurantTable.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/PrepStationService.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/MenuItemRepository.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/controller/ModifierGroupController.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/PrepStationRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/controller/TableController.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/ModifierService.java
@@ -22,6 +23,7 @@
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/ModifierRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/MenuItem.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/controller/OrderController.java
+/Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/controller/ModifierController.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/entity/Modifier.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/repository/TableRepository.java
 /Users/cjamison/Projects/NotaPOS/backend/src/main/java/com/notapos/service/MenuItemService.java

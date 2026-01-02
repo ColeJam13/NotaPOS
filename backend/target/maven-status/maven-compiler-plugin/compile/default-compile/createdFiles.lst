@@ -21,7 +21,9 @@ com/notapos/service/TableService.class
 com/notapos/repository/TableRepository.class
 com/notapos/entity/Modifier.class
 com/notapos/service/MenuItemService.class
+com/notapos/controller/ModifierController.class
 com/notapos/repository/MenuItemRepository.class
 com/notapos/service/ModifierService.class
 com/notapos/entity/ModifierGroup.class
+com/notapos/controller/ModifierGroupController.class
 com/notapos/repository/ModifierGroupRepository.class

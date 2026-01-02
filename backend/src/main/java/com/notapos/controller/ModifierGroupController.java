@@ -1,0 +1,68 @@
+package com.notapos.controller;
+
+import com.notapos.entity.ModifierGroup;
+import com.notapos.service.ModifierGroupService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+/**
+ * REST API Controller for ModifierGroup operations.
+ * 
+ * @author CJ
+ */
+
+@RestController
+@RequestMapping("/api/modifier-groups")
+public class ModifierGroupController {
+    
+    private final ModifierGroupService modifierGroupService;
+
+    @Autowired
+    public ModifierGroupController(ModifierGroupService modifierGroupService) {
+        this.modifierGroupService = modifierGroupService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ModifierGroup>> getAllModifierGroups(
+            @RequestParam(required = false) Boolean active) {
+
+        if (active != null && active) {
+            return ResponseEntity.ok(modifierGroupService.getActiveModifierGroups());
+        }
+        return ResponseEntity.ok(modifierGroupService.getAllModifierGroups());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ModifierGroup> getModifierGroupById(@PathVariable Long id) {
+        return modifierGroupService.getModifierGroupById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<ModifierGroup> createModifierGroup(@RequestBody ModifierGroup modifierGroup) {
+        ModifierGroup created = modifierGroupService.createModifierGroup(modifierGroup);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ModifierGroup> updateModifierGroup(
+            @PathVariable Long id,
+            @RequestBody ModifierGroup modifierGroup) {
+        try {
+            ModifierGroup updated = modifierGroupService.updateModifierGroup(id, modifierGroup);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteModifierGroup(@PathVariable Long id) {
+        modifierGroupService.deleteModifierGroup(id);
+        return ResponseEntity.noContent().build();
+    }
+}

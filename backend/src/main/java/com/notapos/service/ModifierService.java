@@ -23,7 +23,7 @@ public class ModifierService {
         this.modifierRepository = modifierRepository;
     }
 
-    public List<Modifier> getAllModifier() {
+    public List<Modifier> getAllModifiers() {
         return modifierRepository.findAll();
     }
 
@@ -36,6 +36,10 @@ public class ModifierService {
     }
 
     public List<Modifier> getModifiersByGroup(Long modifierGroupId) {
+        return modifierRepository.findByModifierGroupId(modifierGroupId);
+    }
+
+    public List<Modifier> getActiveModifiersByGroup(Long modifierGroupId) {
         return modifierRepository.findByModifierGroupIdAndIsActive(modifierGroupId, true);
     }
 
