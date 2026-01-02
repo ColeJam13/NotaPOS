@@ -13,6 +13,7 @@ com/notapos/entity/PrepStation.class
 com/notapos/controller/OrderItemController.class
 com/notapos/service/TableService.class
 com/notapos/repository/TableRepository.class
+com/notapos/entity/Modifier.class
 com/notapos/service/MenuItemService.class
 com/notapos/controller/OrderController.class
 com/notapos/service/PrepStationService.class
