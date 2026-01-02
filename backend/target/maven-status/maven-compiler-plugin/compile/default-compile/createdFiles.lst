@@ -31,6 +31,7 @@ com/notapos/entity/Modifier.class
 com/notapos/entity/TableStatusLog.class
 com/notapos/service/MenuItemService.class
 com/notapos/controller/ModifierController.class
+com/notapos/controller/MenuItemModifierGroupController.class
 com/notapos/repository/MenuItemRepository.class
 com/notapos/service/ModifierService.class
 com/notapos/service/TableStatusLogService.class
