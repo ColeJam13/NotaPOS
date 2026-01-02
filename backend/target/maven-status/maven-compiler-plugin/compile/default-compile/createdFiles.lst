@@ -14,6 +14,7 @@ com/notapos/entity/RestaurantTable.class
 com/notapos/entity/PrepStation.class
 com/notapos/controller/TableStatusLogController.class
 com/notapos/controller/OrderController.class
+com/notapos/controller/OrderItemModifierController.class
 com/notapos/repository/ModifierRepository.class
 com/notapos/service/PrepStationService.class
 com/notapos/service/ModifierGroupService.class
