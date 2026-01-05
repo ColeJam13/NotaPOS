@@ -31,14 +31,19 @@ useEffect(() => {
         setSecondsLeft(0);
         setTimerExpires(null);
         clearInterval(interval);
-        alert('Timer expired! Items locked and sent to kitchen.');
+
+        setOrderItems(prevItems => prevItems.map(item => ({
+          ...item,
+          status: 'locked'
+        })));
+
       } else {
         setSecondsLeft(diff);
       }
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [timerExpires]);
+  }, [timerExpires, orderItems]);
 
   const sendOrder = async () => {
     try {
@@ -77,7 +82,6 @@ useEffect(() => {
       setTimerExpires(expiresAt);
       setSecondsLeft(15);
 
-      alert('Order sent! Timer started.');
     } catch (error) {
       console.error('Error sending order:', error);
       alert('Failed to send order');
@@ -107,17 +111,25 @@ useEffect(() => {
 
         <div className="order-items-list">
           {orderItems.map((item, index) => (
-            <div key={index} className="order-item">
-              <span>{item.name}</span>
+            <div key={index} className={`order-item ${item.status === 'locked' ? 'locked' : ''}`}>
+              <span>{item.status === 'locked' && '🔒 '}{item.name}</span>
               <span>${item.price.toFixed(2)}</span>
+              {item.status !== 'locked' && (
               <button
                 className="btn-remove"
                 onClick={() => {
-                  setOrderItems(orderItems.filter((_, i) => i !== index))
+                  setOrderItems(orderItems.filter((_, i) => i !== index));
+
+                  if (timerExpires) {
+                    const newExpires = new Date(Date.now() + 15000);
+                    setTimerExpires(newExpires);
+                    setSecondsLeft(15);
+                  }
                 }}
               >
                 x
               </button>
+              )}
             </div>
           ))}
         </div>
@@ -200,8 +212,19 @@ useEffect(() => {
                   menuItemId: item.menuItemId,
                   name: item.name,
                   price: item.price,
-                  quantity: 1
+                  quantity: 1,
+                  status: 'draft'
                 }]);
+
+                if (timerExpires) {
+                  const newExpires = new Date(Date.now() + 15000);
+                  setTimerExpires(newExpires);
+                  setSecondsLeft(15);
+                }
+
+                if (secondsLeft === 0) {
+                  setSecondsLeft(null);
+                }
               }}>
                 <h3>{item.name}</h3>
                 <p className="price">${item.price.toFixed(2)}</p>

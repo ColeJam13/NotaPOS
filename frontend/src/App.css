@@ -243,3 +243,13 @@
   margin: 15px 0;
   font-size: 16px;
 }
+
+.order-item.locked {
+  opacity: 0.5;
+  background: #0f0f1e;
+  border-color: #666;
+}
+
+.order-item.locked span {
+  color: #888;
+}
