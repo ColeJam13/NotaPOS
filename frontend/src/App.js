@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import CreateOrder from './CreateOrder';
+import ActiveOrders from './ActiveOrders';
 import './App.css';
 
 function App() {
@@ -7,6 +8,10 @@ function App() {
 
   if (currentView === 'createOrder') {
     return <CreateOrder />
+  }
+
+  if (currentView === 'activeOrders') {
+    return <ActiveOrders />;
   }
 
   return (
