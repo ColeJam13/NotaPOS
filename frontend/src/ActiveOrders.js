@@ -57,13 +57,13 @@ function ActiveOrders({ setCurrentView }) {
 
             <div className="view-toggle">
                 <button
-                className={`toggle-btn ${view === 'FOH' ? 'active' : ''}`}
+                className={`toggle-btn ${view === 'FOH' ? 'active' : ''}`}              // FOH Toggle button for active orders
                 onClick={() => setView('FOH')}
                 >
                 FOH VIEW
                 </button>
                 <button
-                className={`toggle-btn ${view === 'BOH' ? 'active' : ''}`}
+                className={`toggle-btn ${view === 'BOH' ? 'active' : ''}`}              // BOH toggle button for active orders
                 onClick={() => setView('BOH')}
                 >
                 BOH VIEW
@@ -77,7 +77,7 @@ function ActiveOrders({ setCurrentView }) {
                 orders.map(order => {
                     const items = orderItems.filter(item => item.orderId === order.orderId);
                     const filteredItems = view === 'BOH'
-                    ? items.filter(item => item.status === 'pending' || item.status === 'fired' || item.status === 'completed')
+                    ? items.filter(item => item.status === 'pending' || item.status === 'fired' || item.status === 'completed')         // FOH and BOH available state views
                     : items.filter(item => item.status !== 'draft');
 
                     if (filteredItems.length === 0) return null;
@@ -88,13 +88,13 @@ function ActiveOrders({ setCurrentView }) {
                         <div className="order-items">
                         {filteredItems.map(item => (
                             <div key={item.orderItemId} className="order-item-row">
-                            <span>{item.quantity}x</span>
+                            <span>{item.quantity}x</span>                                                                                  
                             <span>{menuItems.find(m => m.menuItemId === item.menuItemId)?.name || `Item ${item.menuItemId}`}</span>
                             <span className={`status-${item.status}`}>{item.status}</span>
 
                             {view === 'BOH' && item.status === 'pending' && (
                               <button
-                                className="btn-start"
+                                className="btn-start"                                                   // changes status from pending to fired
                                 onClick={async () => {
                                   await fetch(`http://localhost:8080/api/order-items/${item.orderItemId}/start`, {
                                     method: 'PUT'
@@ -115,7 +115,7 @@ function ActiveOrders({ setCurrentView }) {
 
                             {view === 'BOH' && item.status === 'fired' && (
                               <button
-                                className="btn-complete"
+                                className="btn-complete"                                                                  // Complete order button appears when status is fired
                                 onClick={async () => {
                                   await fetch(`http://localhost:8080/api/order-items/${item.orderItemId}/complete`, {
                                     method: 'PUT'
@@ -123,7 +123,7 @@ function ActiveOrders({ setCurrentView }) {
 
                                   setOrderItems(prevItems =>
                                     prevItems.map(i =>
-                                      i.orderItemId === item.orderItemId
+                                      i.orderItemId === item.orderItemId                                // changed state to completed
                                         ? {...i, status: 'completed' }
                                         : i
                                     )
