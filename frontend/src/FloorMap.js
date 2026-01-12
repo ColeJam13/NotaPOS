@@ -28,8 +28,8 @@ function FloorMap({ setCurrentView }) {
                             key={table.tableId}
                             className={`table-visual ${table.shape} ${table.status}`}
                             style={{
-                                left: `${table.xPosition}px`,
-                                top: `${table.yPosition}px`
+                                left: `${table.xposition}px`,
+                                top: `${table.yposition}px`
                             }}
                             onClick={() => {
                                 console.log('Clicked table:', table.tableNumber);
