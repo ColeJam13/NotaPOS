@@ -13,6 +13,36 @@ function CreateOrder({ setCurrentView, selectedTable }) {
   const [currentOrderId, setCurrentOrderId] = useState(null);
 
 useEffect(() => {
+  if (selectedTable && selectedTable.status === 'occupied') {
+
+    fetch(`http://localhost:8080/api/orders?tableId=${selectedTable.tableId}`)
+      .then(response => response.json())
+      .then(orders => {
+        if (orders.length > 0) {
+          const activeOrder = orders.find(o => o.status === 'open');
+          if (activeOrder) {
+            setCurrentOrderId(activeOrder.orderId);
+
+            fetch(`http://localhost:8080/api/order-items/order/${activeOrder.orderId}`)
+              .then(response => response.json())
+              .then(items => {
+                const formattedItems = items.map(item => ({
+                  menuItemId: item.menuItemId,
+                  name: menuItems.find(m => m.menuItemId === item.menuItemId)?.name,
+                  price: item.price,
+                  quantity: item.quantity,
+                  status: item.status
+                }));
+                setOrderItems(formattedItems);
+              });
+          }
+        }
+      })
+      .catch(error => console.error('Error loading order:', error));
+  }
+}, [selectedTable, menuItems]);
+
+useEffect(() => {
   fetch('http://localhost:8080/api/menu-items')
     .then(response => response.json())
     .then(data => {
@@ -63,6 +93,12 @@ useEffect(() => {
       console.log('Order created', order);
       setCurrentOrderId(order.orderId);
 
+      await fetch(`http://localhost:8080/api/tables/${currentTableId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ status: 'occupied' })
+      });
+
       for (const item of orderItems) {
         await fetch('http://localhost:8080/api/order-items', {
           method: 'POST',
@@ -112,10 +148,10 @@ useEffect(() => {
 
                 <div className="order-items-list">
                 {orderItems.map((item, index) => (
-                    <div key={index} className={`order-item ${item.status === 'locked' ? 'locked' : ''}`}>
+                    <div key={index} className={`order-item ${item.status !== 'draft' ? 'locked' : ''}`}>
                     <span>{item.status === 'locked' && '🔒 '}{item.name}</span>
                     <span>${item.price.toFixed(2)}</span>
-                    {item.status !== 'locked' && (
+                    {item.status === 'draft' && (
                     <button
                         className="btn-remove"
                         onClick={() => {

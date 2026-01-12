@@ -85,4 +85,8 @@ public class OrderService {
     public void deleteOrder(Long id) {                          // delete an order
         orderRepository.deleteById(id);
     }
+
+    public List<Order> getOrdersByTableId(Long tableId) {
+        return orderRepository.findByTableId(tableId);
+    }
 }

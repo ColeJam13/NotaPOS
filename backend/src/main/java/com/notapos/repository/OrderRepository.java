@@ -22,6 +22,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByTableIdAndStatus(Long tableId, String status);                        // Find orders by status and table
 
+
     @Query("SELECT o FROM Order o WHERE o.createdAt BETWEEN :start AND :end")               // Find orders created within a time range
     List<Order> findOrdersBetween(LocalDateTime start, LocalDateTime end);
 }

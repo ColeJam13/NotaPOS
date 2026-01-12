@@ -15,6 +15,17 @@ function FloorMap({ setCurrentView, setSelectedTable }) {
             .catch(error => console.error('Error fetching tables:', error));
     },      []);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            fetch('http://localhost:8080/api/tables')
+                .then(response => response.json())
+                .then(data => setTables(data))
+                .catch(error => console.error('Error fetching tables:', error));
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="page-with-nav">
             <NavBar currentView="floor-map-page" setCurrentView={setCurrentView} />

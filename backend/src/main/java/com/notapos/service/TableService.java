@@ -63,4 +63,14 @@ public class TableService {
     public void deleteTable(Long id) {                  // Delete table (not recommended, use is_active flag instead)
         tableRepository.deleteById(id);
     }
+
+    public RestaurantTable updateTable(Long id, RestaurantTable tableUpdate) {
+        RestaurantTable table = tableRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Table not found with id: " + id));
+        
+        if (tableUpdate.getStatus() != null) {
+            table.setStatus(tableUpdate.getStatus());
+        }
+        return tableRepository.save(table);
+    }
 }

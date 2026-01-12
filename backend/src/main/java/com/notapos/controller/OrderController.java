@@ -29,15 +29,21 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping                                                                 // Get all Orders
-    public ResponseEntity<List<Order>> getAllOrders(
-            @RequestParam(required = false) String status) {
-
-        if (status != null) {
-            return ResponseEntity.ok(orderService.getOrdersByStatus(status));
-        }
-        return ResponseEntity.ok(orderService.getAllOrders());
+@GetMapping
+public ResponseEntity<List<Order>> getAllOrders(
+        @RequestParam(required = false) String status,
+        @RequestParam(required = false) Long tableId) {  // ADD tableId param
+    
+    if (tableId != null) {  // ADD this block
+        return ResponseEntity.ok(orderService.getOrdersByTableId(tableId));
     }
+    
+    if (status != null) {
+        return ResponseEntity.ok(orderService.getOrdersByStatus(status));
+    }
+    
+    return ResponseEntity.ok(orderService.getAllOrders());
+}
 
     @GetMapping("/{id}")                                                    // Get order by ID
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {

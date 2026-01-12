@@ -27,7 +27,7 @@ function App() {
       <div className="landing-buttons">
                 <button
           className="landing-btn"
-          onClick={() => setCurrentView('createOrder')}
+          onClick={() => setCurrentView('floorMap')}
         >
           FLOOR MAP
         </button>

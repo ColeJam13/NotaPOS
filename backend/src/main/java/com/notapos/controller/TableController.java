@@ -57,4 +57,17 @@ public class TableController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RestaurantTable> updateTable(
+            @PathVariable Long id,
+            @RequestBody RestaurantTable tableUpdate) {
+        try {
+            RestaurantTable updated = tableService.updateTable(id, tableUpdate);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+            }
+    
 }
