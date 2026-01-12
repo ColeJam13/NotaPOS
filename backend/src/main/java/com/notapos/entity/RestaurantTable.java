@@ -41,6 +41,18 @@ public class RestaurantTable {
     @Column(name = "status", nullable = false, length = 20)
     private String status = "available";
 
+    @Column(name = "x_position")
+    private Integer xPosition;
+
+    @Column(name = "y_position")
+    private Integer yPosition;
+
+    @Column(name = "shape", length = 20)
+    private String shape = "square";
+
+    @Column(name = "rotation")
+    private Integer rotation = 0;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -84,6 +96,38 @@ public class RestaurantTable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getXPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(Integer xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public Integer getYPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(Integer yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public String getShape() {
+        return shape;
+    }
+
+    public void setShape(String shape) {
+        this.shape = shape;
+    }
+
+    public Integer getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(Integer rotation) {
+        this.rotation = rotation;
     }
 
     public LocalDateTime getCreatedAt() {
