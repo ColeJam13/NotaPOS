@@ -7,6 +7,7 @@ function ActiveOrders({ setCurrentView }) {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [menuItems, setMenuItems] = useState([]);
+  const [tables, setTables] = useState([]);
 
   
   useEffect(() => {
@@ -30,6 +31,11 @@ function ActiveOrders({ setCurrentView }) {
       .then(response => response.json())
       .then(data => setMenuItems(data))
       .catch(error => console.error('Error fetching menu items:', error));
+
+    fetch('http://localhost:8080/api/tables')
+      .then(response => response.json())
+      .then(data => setTables(data))
+      .catch(error => console.error('Error fetching tables:', error));
   }, []);
 
   
@@ -84,7 +90,7 @@ function ActiveOrders({ setCurrentView }) {
 
                     return (
                     <div key={order.orderId} className="order-card">
-                        <h3>Table {order.tableId} - Order #{order.orderId}</h3>
+                        <h3>Table {tables.find(t => t.tableId === order.tableId)?.tableNumber || order.tableId} - Order #{order.orderId}</h3>
                         <div className="order-items">
                         {filteredItems.map(item => (
                             <div key={item.orderItemId} className="order-item-row">

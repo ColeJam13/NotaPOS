@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import NavBar from './NavBar'
+import { Lock } from 'lucide-react';
 import './App.css';
 
 
@@ -14,7 +15,6 @@ function CreateOrder({ setCurrentView, selectedTable }) {
 
 useEffect(() => {
   if (selectedTable && selectedTable.status === 'occupied') {
-
     fetch(`http://localhost:8080/api/orders?tableId=${selectedTable.tableId}`)
       .then(response => response.json())
       .then(orders => {
@@ -26,24 +26,32 @@ useEffect(() => {
             fetch(`http://localhost:8080/api/order-items/order/${activeOrder.orderId}`)
               .then(response => response.json())
               .then(items => {
-                const formattedItems = items.map(item => ({
-                  menuItemId: item.menuItemId,
-                  name: menuItems.find(m => m.menuItemId === item.menuItemId)?.name,
-                  price: item.price,
-                  quantity: item.quantity,
-                  status: item.status
-                }));
-                setOrderItems(formattedItems);
+                console.log('Loaded items from backend:', items);
+                
+                fetch('http://localhost:8080/api/menu-items')
+                  .then(response => response.json())
+                  .then(menuData => {
+                    const formattedItems = items.map(item => ({
+                      orderItemId: item.orderItemId,
+                      menuItemId: item.menuItemId,
+                      name: menuData.find(m => m.menuItemId === item.menuItemId)?.name,
+                      price: item.price,
+                      quantity: item.quantity,
+                      status: item.status
+                    }));
+                    console.log('Formatted items:', formattedItems);
+                    setOrderItems(formattedItems);
+                  });
               });
           }
         }
       })
       .catch(error => console.error('Error loading order:', error));
   }
-}, [selectedTable, menuItems]);
+}, [selectedTable]);
 
 useEffect(() => {
-  fetch('http://localhost:8080/api/menu-items')
+  fetch('http://localhost:8080/api/menu-items')                             // fetch menu items
     .then(response => response.json())
     .then(data => {
       console.log('Menu items:', data);
@@ -53,21 +61,22 @@ useEffect(() => {
   }, []);
 
   useEffect(() => {
-    if (!timerExpires) return;
+    if (!timerExpires) return;                                       
 
-    const interval = setInterval(() => {
+    const interval = setInterval(() => {                              // timer logic
       const now = new Date();
       const diff = Math.floor((timerExpires - now) / 1000);
 
       if (diff <= 0) {
+        console.log('Timer expired! Current items:', orderItems);  // ADD THIS
         setSecondsLeft(0);
         setTimerExpires(null);
         clearInterval(interval);
 
-        setOrderItems(prevItems => prevItems.map(item => ({
-          ...item,
-          status: item.status === 'limbo' ? 'pending' : item.status
-        })));
+      setOrderItems(prevItems => prevItems.map(item => {
+        if (item.status === 'limbo') return { ...item, status: 'pending' };
+        return item;  // Don't touch draft/pending/fired/completed items
+      }));
 
       } else {
         setSecondsLeft(diff);
@@ -80,7 +89,7 @@ useEffect(() => {
   const sendOrder = async () => {
     try {
 
-      const orderResponse = await fetch('http://localhost:8080/api/orders', {
+      const orderResponse = await fetch('http://localhost:8080/api/orders', {               // updates order status
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -93,14 +102,14 @@ useEffect(() => {
       console.log('Order created', order);
       setCurrentOrderId(order.orderId);
 
-      await fetch(`http://localhost:8080/api/tables/${currentTableId}`, {
+      await fetch(`http://localhost:8080/api/tables/${currentTableId}`, {                     // changes table status
         method: 'PUT',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({ status: 'occupied' })
       });
 
       for (const item of orderItems) {
-        await fetch('http://localhost:8080/api/order-items', {
+        await fetch('http://localhost:8080/api/order-items', {                              // Add item to order
           method: 'POST',
           headers: { 'Content-type': 'application/json' },
           body: JSON.stringify({
@@ -112,7 +121,7 @@ useEffect(() => {
         });
       }
 
-      const sendResponse = await fetch(`http://localhost:8080/api/order-items/order/${order.orderId}/send`, {
+      const sendResponse = await fetch(`http://localhost:8080/api/order-items/order/${order.orderId}/send`, {         // send order
         method: 'POST'
       });
       const sentItems = await sendResponse.json();
@@ -121,39 +130,47 @@ useEffect(() => {
       setTimerExpires(expiresAt);
       setSecondsLeft(15);
 
+      setOrderItems(prevItems => prevItems.map(item => {
+        if (item.status === 'draft') return { ...item, status: 'limbo' };
+        return item;  // Don't touch pending/fired/completed items
+      }));
+
     } catch (error) {
       console.error('Error sending order:', error);
       alert('Failed to send order');
     }
   };
 
-  return (
+  return (                                                                          // change table in create order tab
     <div className="page-with-nav">
-        <NavBar currentView="createOrder" setCurrentView={setCurrentView} />
+        <NavBar currentView="createOrder" setCurrentView={setCurrentView} />                      
             <div className="app">
             <div className="order-panel">
-                <h2>Current Order - Table {selectedTable?.tableNumber || 'F1'}</h2>
+                <h2>Current Order - Table {selectedTable?.tableNumber || 'F1'}</h2>         
 
-            {secondsLeft !== null && secondsLeft > 0 && (
+            {secondsLeft !== null && secondsLeft > 0 && (                           // display timer
                 <div className="timer-display">
                 {secondsLeft} seconds to edit
                 </div>
             )}
 
-            {secondsLeft === 0 && (
+            {secondsLeft === 0 && (                                                   // lock item
                 <div className="timer-locked">
-              Items locked and sent to prep station
+              Items locked and sent to prep station                                   
                 </div>
             )}
 
                 <div className="order-items-list">
-                {orderItems.map((item, index) => (
-                    <div key={index} className={`order-item ${item.status !== 'draft' ? 'locked' : ''}`}>
-                    <span>{item.status === 'locked' && '🔒 '}{item.name}</span>
+                {orderItems.map((item, index) => (                                                              // lock item and change status
+                    <div key={index} className={`order-item ${(item.status === 'pending' || item.status === 'fired' || item.status === 'completed') ? 'locked' : ''}`}>               
+                    <span>
+                      {(item.status === 'pending' || item.status === 'fired' || item.status === 'completed') && <Lock size={14} className="lock-icon" />}
+                      {item.name}
+                    </span>
                     <span>${item.price.toFixed(2)}</span>
-                    {item.status === 'draft' && (
+                    {(item.status === 'draft' || item.status === 'limbo') &&(
                     <button
-                        className="btn-remove"
+                        className="btn-remove"                                                      // remove item
                         onClick={() => {
                         setOrderItems(orderItems.filter((_, i) => i !== index));
 
@@ -171,16 +188,16 @@ useEffect(() => {
                 ))}
                 </div>
 
-                {orderItems.length === 0 && (
+                {orderItems.length === 0 && (                                             // show when no items on order / calculate totals (below)
                 <p className="empty-order">No items added yet</p>
                 )}
-
-            <div className="order-totals">
+                                                                                                    
+            <div className="order-totals">                                                          
                 <div className="total-row">
                 <span>Subtotal:</span>
                 <span>${orderItems.reduce((sum, item) => sum + item.price, 0).toFixed(2)}</span>
                 </div>
-                <div className="total-row">
+                <div className="total-row"> 
                 <span>Tax (3%):</span>
                 <span>${(orderItems.reduce((sum, item) => sum + item.price, 0) * 0.03).toFixed(2)}</span>
                 </div>
@@ -194,16 +211,16 @@ useEffect(() => {
                 <button className="btn-send" onClick={async () => {
                     if (timerExpires && currentOrderId) {
 
-                      await fetch(`http://localhost:8080/api/order-items/order/${currentOrderId}/send-now`, {
+                      await fetch(`http://localhost:8080/api/order-items/order/${currentOrderId}/send-now`, {                 // send order now (bypass timer)
                         method: 'POST'
                       });
 
                     setSecondsLeft(0);
                     setTimerExpires(null);
-                    setOrderItems(prevItems => prevItems.map(item => ({
-                        ...item,
-                        status: item.status === 'limbo' ? 'pending' : item.status
-                    })));
+                    setOrderItems(prevItems => prevItems.map(item => {
+                      if (item.status === 'limbo') return { ...item, status: 'pending' };
+                      return item;  // Don't touch draft/pending/fired/completed items
+                    }));
                     } else {
                     sendOrder();
                     }
@@ -212,12 +229,12 @@ useEffect(() => {
                 </button>
                 </div>
             </div>
-
-            <div className="menu-panel">
+                                                                                  
+            <div className="menu-panel">                                                          
                 <div className="category-tabs">
                 <button
                     className={`category-tab ${selectedCategory === 'Savory' ? 'active' : ''}`}
-                    onClick={() => setSelectedCategory('Savory')}
+                    onClick={() => setSelectedCategory('Savory')}                                       // Menu Category panel and buttons
                 >
                     SAVORY
                 </button>
@@ -260,7 +277,7 @@ useEffect(() => {
                 </div>
                 <div className="menu-grid">
                 {menuItems
-                    .filter(item => item.category === selectedCategory)
+                    .filter(item => item.category === selectedCategory)                             // maps the items to their buttons
                     .map(item => (
                     <div key ={item.menuItemId} className="menu-item-card" onClick={() => {
                         setOrderItems([...orderItems, {

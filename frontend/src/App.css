@@ -754,3 +754,8 @@
   margin-top: 5px;
 }
 
+.lock-icon {
+  margin-right: 8px;
+  color: #ff3366;
+  flex-shrink: 0;
+}
