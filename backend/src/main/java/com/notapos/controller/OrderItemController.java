@@ -86,18 +86,20 @@ public class OrderItemController {
         return ResponseEntity.ok(sentItems);
     }
 
-    @PostMapping("/order/{orderId}/send-now")                                                   // Ensures items appear as pending when timer is bypassed
+    @PostMapping("/order/{orderId}/send-now")
     public ResponseEntity<List<OrderItem>> sendOrderNow(@PathVariable Long orderId) {
         List<OrderItem> draftItems = orderItemService.getDraftItemsByOrder(orderId);
-        List<OrderItem> pendingItems = orderItemService.getPendingItemsByOrder(orderId);
+        List<OrderItem> limboItems = orderItemService.getLimboItemsByOrder(orderId);
 
         List<OrderItem> sentItems = new java.util.ArrayList<>();
 
+        // Send draft items
         for (OrderItem item : draftItems) {
             sentItems.add(orderItemService.sendItemNow(item.getOrderItemId()));
         }
 
-        for (OrderItem item : pendingItems) {
+        // Send limbo items (bypass timer)
+        for (OrderItem item : limboItems) {
             sentItems.add(orderItemService.sendItemNow(item.getOrderItemId()));
         }
 

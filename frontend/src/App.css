@@ -21,6 +21,7 @@
   background: #1a1a2e;
   color: #e0e0e0;
   font-family: 'Courier New', monospace;
+  overflow: hidden;
 }
 
 .app-header {
@@ -42,11 +43,13 @@
   margin: 0;
 }
 
-
 .order-panel {
   width: 40%;
   padding: 20px;
   border-right: 2px solid #b026ff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .menu-panel {
@@ -120,6 +123,10 @@
 
 .order-items-list {
   margin-top: 20px;
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  max-height: 35vh;
 }
 
 .order-item {
@@ -152,9 +159,9 @@
 }
 
 .order-totals {
-  margin-top: auto;
   padding-top: 20px;
   border-top: 2px solid #b026ff;
+  flex-shrink: 0;
 }
 
 .total-row {

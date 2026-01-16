@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import NavBar from './NavBar'
 import { Lock } from 'lucide-react';
 import './App.css';
@@ -12,6 +12,7 @@ function CreateOrder({ setCurrentView, selectedTable }) {
   const [timerExpires, setTimerExpires] = useState(null);
   const [secondsLeft, setSecondsLeft] = useState(null);
   const [currentOrderId, setCurrentOrderId] = useState(null);
+  const orderItemsRef = useRef(null);
 
 useEffect(() => {
   if (selectedTable && selectedTable.status === 'occupied') {
@@ -19,29 +20,39 @@ useEffect(() => {
       .then(response => response.json())
       .then(orders => {
         if (orders.length > 0) {
-          const activeOrder = orders.find(o => o.status === 'open');
-          if (activeOrder) {
-            setCurrentOrderId(activeOrder.orderId);
+          const openOrders = orders.filter(o => o.status === 'open');
+          
+          if (openOrders.length > 0) {
+                                                                                          // Use the FIRST order as the "current" order for adding new items
+            setCurrentOrderId(openOrders[0].orderId);
 
-            fetch(`http://localhost:8080/api/order-items/order/${activeOrder.orderId}`)
+                                                                                          // Fetch menu items first
+            fetch('http://localhost:8080/api/menu-items')
               .then(response => response.json())
-              .then(items => {
-                console.log('Loaded items from backend:', items);
-                
-                fetch('http://localhost:8080/api/menu-items')
-                  .then(response => response.json())
-                  .then(menuData => {
-                    const formattedItems = items.map(item => ({
-                      orderItemId: item.orderItemId,
-                      menuItemId: item.menuItemId,
-                      name: menuData.find(m => m.menuItemId === item.menuItemId)?.name,
-                      price: item.price,
-                      quantity: item.quantity,
-                      status: item.status
-                    }));
-                    console.log('Formatted items:', formattedItems);
-                    setOrderItems(formattedItems);
-                  });
+              .then(menuData => {
+                                                                                          // Fetch items from ALL open orders
+                const itemPromises = openOrders.map(order =>
+                  fetch(`http://localhost:8080/api/order-items/order/${order.orderId}`)
+                    .then(response => response.json())
+                );
+
+                                                                                          // Wait for all item fetches to complete
+                Promise.all(itemPromises).then(allItemArrays => {
+                                                                                          // Flatten all items into one array
+                  const allItems = allItemArrays.flat();
+                  
+                  const formattedItems = allItems.map(item => ({
+                    orderItemId: item.orderItemId,
+                    menuItemId: item.menuItemId,
+                    name: menuData.find(m => m.menuItemId === item.menuItemId)?.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    status: item.status
+                  }));
+                  
+                  console.log('Loaded all items from all orders:', formattedItems);
+                  setOrderItems(formattedItems);
+                });
               });
           }
         }
@@ -75,7 +86,7 @@ useEffect(() => {
 
       setOrderItems(prevItems => prevItems.map(item => {
         if (item.status === 'limbo') return { ...item, status: 'pending' };
-        return item;  // Don't touch draft/pending/fired/completed items
+        return item;                                                                    // Don't touch draft/pending/fired/completed items
       }));
 
       } else {
@@ -86,53 +97,78 @@ useEffect(() => {
     return () => clearInterval(interval);
   }, [timerExpires, orderItems]);
 
+    useEffect(() => {
+    if (orderItemsRef.current) {
+      orderItemsRef.current.scrollTop = orderItemsRef.current.scrollHeight;
+    }
+  }, [orderItems]);
+
   const sendOrder = async () => {
     try {
+      let orderId = currentOrderId;
 
-      const orderResponse = await fetch('http://localhost:8080/api/orders', {               // updates order status
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          tableId: currentTableId,
-          orderType: 'dine_in',
-          status: 'open'
-        })
-      });
-      const order = await orderResponse.json();
-      console.log('Order created', order);
-      setCurrentOrderId(order.orderId);
+                                                                                    // If no current order, create a new one
+      if (!orderId) {
+        const orderResponse = await fetch('http://localhost:8080/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tableId: currentTableId,
+            orderType: 'dine_in',
+            status: 'open'
+          })
+        });
+        const order = await orderResponse.json();
+        console.log('Order created', order);
+        orderId = order.orderId;
+        setCurrentOrderId(orderId);
 
-      await fetch(`http://localhost:8080/api/tables/${currentTableId}`, {                     // changes table status
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ status: 'occupied' })
-      });
+        await fetch(`http://localhost:8080/api/tables/${currentTableId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json'},
+          body: JSON.stringify({ status: 'occupied' })
+        });
+      }
 
-      for (const item of orderItems) {
-        await fetch('http://localhost:8080/api/order-items', {                              // Add item to order
+      // Add only the DRAFT items to the order
+      const draftItems = orderItems.filter(item => item.status === 'draft');
+
+      for (const item of draftItems) {
+        await fetch('http://localhost:8080/api/order-items', {
           method: 'POST',
           headers: { 'Content-type': 'application/json' },
           body: JSON.stringify({
-            orderId: order.orderId,
+            orderId: orderId,
             menuItemId: item.menuItemId,
             quantity: item.quantity,
-            price: item.price
+            price: item.price,
+            status: 'draft'
           })
         });
       }
 
-      const sendResponse = await fetch(`http://localhost:8080/api/order-items/order/${order.orderId}/send`, {         // send order
+      // Now send ALL draft items for this order (backend will only send items with status 'draft')
+      const sendResponse = await fetch(`http://localhost:8080/api/order-items/order/${orderId}/send`, {
         method: 'POST'
       });
       const sentItems = await sendResponse.json();
 
-      const expiresAt = new Date(sentItems[0].delayExpiresAt);
-      setTimerExpires(expiresAt);
-      setSecondsLeft(15);
+      console.log('Sent items response:', sentItems);
 
+      if (sentItems && sentItems.length > 0) {
+        const expiresAt = new Date(sentItems[0].delayExpiresAt);
+        console.log('Timer expires at:', expiresAt);
+        console.log('Current time:', new Date());
+        console.log('Seconds until expiration:', Math.floor((expiresAt - new Date()) / 1000));
+        
+        setTimerExpires(expiresAt);
+        setSecondsLeft(15);
+      }
+
+                                                                                            // Change only draft items to limbo
       setOrderItems(prevItems => prevItems.map(item => {
         if (item.status === 'draft') return { ...item, status: 'limbo' };
-        return item;  // Don't touch pending/fired/completed items
+        return item;
       }));
 
     } catch (error) {
@@ -160,7 +196,7 @@ useEffect(() => {
                 </div>
             )}
 
-                <div className="order-items-list">
+                <div className="order-items-list" ref={orderItemsRef}>
                 {orderItems.map((item, index) => (                                                              // lock item and change status
                     <div key={index} className={`order-item ${(item.status === 'pending' || item.status === 'fired' || item.status === 'completed') ? 'locked' : ''}`}>               
                     <span>
@@ -209,21 +245,37 @@ useEffect(() => {
                 <div className="order-actions">
                 <button className="btn-save">SAVE DRAFT</button>
                 <button className="btn-send" onClick={async () => {
-                    if (timerExpires && currentOrderId) {
+                  if (timerExpires && currentOrderId) {
+                    // Call backend to send now
+                    await fetch(`http://localhost:8080/api/order-items/order/${currentOrderId}/send-now`, {
+                      method: 'POST'
+                    });
 
-                      await fetch(`http://localhost:8080/api/order-items/order/${currentOrderId}/send-now`, {                 // send order now (bypass timer)
-                        method: 'POST'
-                      });
-
+                    // Stop the timer
                     setSecondsLeft(0);
                     setTimerExpires(null);
-                    setOrderItems(prevItems => prevItems.map(item => {
-                      if (item.status === 'limbo') return { ...item, status: 'pending' };
-                      return item;  // Don't touch draft/pending/fired/completed items
+
+                    // Refetch the order items to get updated status from backend
+                    const response = await fetch(`http://localhost:8080/api/order-items/order/${currentOrderId}`);
+                    const updatedItems = await response.json();
+                    
+                    // Fetch menu items to format properly
+                    const menuResponse = await fetch('http://localhost:8080/api/menu-items');
+                    const menuData = await menuResponse.json();
+                    
+                    const formattedItems = updatedItems.map(item => ({
+                      orderItemId: item.orderItemId,
+                      menuItemId: item.menuItemId,
+                      name: menuData.find(m => m.menuItemId === item.menuItemId)?.name,
+                      price: item.price,
+                      quantity: item.quantity,
+                      status: item.status
                     }));
-                    } else {
+                    
+                    setOrderItems(formattedItems);
+                  } else {
                     sendOrder();
-                    }
+                  }
                 }}>
                     {timerExpires ? 'SEND NOW?' : 'SEND ORDER'}
                 </button>
