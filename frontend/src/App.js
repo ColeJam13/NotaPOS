@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CreateOrder from './CreateOrder';
 import ActiveOrders from './ActiveOrders';
 import FloorMap from './FloorMap';
+import ActiveTables from './ActiveTables';
 import './App.css';
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
     return <FloorMap setCurrentView={setCurrentView} setSelectedTable={setSelectedTable} />;
   }
 
+  if (currentView === 'activeTables') {
+  return <ActiveTables setCurrentView={setCurrentView} setSelectedTable={setSelectedTable} />;
+  }
+
   return (
     <div className="landing-page">
       <h1 className="landing-logo">NOTA-POS</h1>
@@ -30,6 +35,12 @@ function App() {
           onClick={() => setCurrentView('floorMap')}
         >
           FLOOR MAP
+        </button>
+        <button
+          className="landing-btn"
+          onClick={() => setCurrentView('activeTables')}
+        >
+          ACTIVE TABLES
         </button>
         <button
           className="landing-btn"

@@ -236,22 +236,22 @@ INSERT INTO menu_item_modifier_groups (menu_item_modifier_group_id, menu_item_id
 -- ============================================================================
 -- TABLES
 -- ============================================================================
-INSERT INTO tables (table_number, section, seat_count, status, x_position, y_position, shape, rotation, created_at) VALUES
-('F1', 'Front', 2, 'available', 100, 100, 'circle', 0, datetime('now')),
-('F2', 'Front', 2, 'available', 250, 100, 'circle', 0, datetime('now')),
-('F3', 'Front', 4, 'available', 400, 100, 'square', 0, datetime('now')),
-('F4', 'Front', 4, 'available', 550, 100, 'square', 0, datetime('now')),
-('F5', 'Front', 6, 'available', 700, 100, 'square', 0, datetime('now')),
-('B1', 'Back', 4, 'available', 100, 300, 'square', 0, datetime('now')),
-('B2', 'Back', 4, 'available', 250, 300, 'square', 0, datetime('now')),
-('B3', 'Back', 6, 'available', 400, 300, 'square', 0, datetime('now')),
-('B4', 'Back', 6, 'available', 550, 300, 'square', 0, datetime('now')),
-('B5', 'Back', 8, 'available', 700, 300, 'square', 0, datetime('now')),
-('P1', 'Patio', 2, 'available', 100, 500, 'circle', 0, datetime('now')),
-('P2', 'Patio', 2, 'available', 250, 500, 'circle', 0, datetime('now')),
-('P3', 'Patio', 4, 'available', 400, 500, 'square', 0, datetime('now')),
-('P4', 'Patio', 4, 'available', 550, 500, 'square', 0, datetime('now')),
-('P5', 'Patio', 6, 'available', 700, 500, 'square', 0, datetime('now'));
+INSERT INTO tables (table_number, section, seat_count, status, server_name, x_position, y_position, shape, rotation, created_at) VALUES
+('F1', 'Front', 2, 'available', 'CJ', 100, 100, 'circle', 0, datetime('now')),
+('F2', 'Front', 2, 'available', 'CJ', 250, 100, 'circle', 0, datetime('now')),
+('F3', 'Front', 4, 'available', 'CJ', 400, 100, 'square', 0, datetime('now')),
+('F4', 'Front', 4, 'available', 'CJ', 550, 100, 'square', 0, datetime('now')),
+('F5', 'Front', 6, 'available', 'CJ', 700, 100, 'square', 0, datetime('now')),
+('B1', 'Back', 4, 'available', 'Alex', 100, 300, 'square', 0, datetime('now')),
+('B2', 'Back', 4, 'available', 'Alex', 250, 300, 'square', 0, datetime('now')),
+('B3', 'Back', 6, 'available', 'Alex', 400, 300, 'square', 0, datetime('now')),
+('B4', 'Back', 6, 'available', 'Alex', 550, 300, 'square', 0, datetime('now')),
+('B5', 'Back', 8, 'available', 'Alex', 700, 300, 'square', 0, datetime('now')),
+('P1', 'Patio', 2, 'available', 'Sam', 100, 500, 'circle', 0, datetime('now')),
+('P2', 'Patio', 2, 'available', 'Sam', 250, 500, 'circle', 0, datetime('now')),
+('P3', 'Patio', 4, 'available', 'Sam', 400, 500, 'square', 0, datetime('now')),
+('P4', 'Patio', 4, 'available', 'Sam', 550, 500, 'square', 0, datetime('now')),
+('P5', 'Patio', 6, 'available', 'Sam', 700, 500, 'square', 0, datetime('now'));
 
 -- ============================================================================
 -- SUMMARY

@@ -53,6 +53,9 @@ public class RestaurantTable {
     @Column(name = "rotation")
     private Integer rotation = 0;
 
+    @Column(name = "server_name", length = 50)
+    private String serverName;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -128,6 +131,14 @@ public class RestaurantTable {
 
     public void setRotation(Integer rotation) {
         this.rotation = rotation;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String serverName) {
+        this.serverName = serverName;
     }
 
     public LocalDateTime getCreatedAt() {
