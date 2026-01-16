@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import NavBar from './NavBar'
+import NavBar from '../../components/NavBar';
 import { Lock } from 'lucide-react';
-import './App.css';
+import './CreateOrder.css';
 
 
 function CreateOrder({ setCurrentView, selectedTable }) {

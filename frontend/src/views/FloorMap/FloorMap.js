@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import NavBar from './NavBar';
-import './App.css';
+import NavBar from '../../components/NavBar';
+import './FloorMap.css';
 
 function FloorMap({ setCurrentView, setSelectedTable }) {
     const [tables, setTables] = useState([]);

@@ -1,3 +1,5 @@
+import './NavBar.css';
+
 function NavBar({ currentView, setCurrentView }) {
   return (
     <div className="navbar">

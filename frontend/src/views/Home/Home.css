@@ -1,0 +1,46 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #1a1a2e;
+}
+
+.landing-logo {
+  font-family: 'GothicByte', monospace;
+  font-size: 96px;
+  font-weight: bold;
+  color: #b026ff;
+  text-shadow:
+    0 0 15px #b026ff,
+    0 0 25px #b026ff;
+  letter-spacing: 12px;
+  margin-bottom: 60px;
+}
+
+.landing-buttons {
+  display: flex;
+  gap: 30px;
+}
+
+.landing-btn {
+  padding: 20px 40px;
+  font-size: 16px;
+  font-family: 'Press Start 2P', monospace;
+  font-weight: normal;
+  background: transparent;
+  border: 3px solid #b026ff;
+  color: #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  letter-spacing: 2px;
+}
+
+.landing-btn:hover {
+  background: #b026ff;
+  color: #1a1a2e;
+  box-shadow: 0 0 30px rgba(176, 38, 255, 0.6);
+  transform: translateY(-3px);
+}

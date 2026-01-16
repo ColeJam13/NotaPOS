@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import NavBar from './NavBar';
-import './App.css';
+import NavBar from '../../components/NavBar/NavBar';
+import './ActiveTables.css';
 
 function ActiveTables({ setCurrentView, setSelectedTable }) {
     const [tables, setTables] = useState([]);

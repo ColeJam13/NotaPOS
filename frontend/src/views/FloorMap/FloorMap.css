@@ -1,0 +1,83 @@
+.floor-map-page {
+  flex: 1;
+  background: #1a1a2e;
+  padding: 40px;
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+.floor-map-page h2 {
+  text-align: center;
+  text-transform: uppercase;
+  color: #39ff14;
+  background: #16213e;
+  padding: 15px;
+  border: 2px solid #b026ff;
+  border-radius: 8px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+.floor-canvas {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 200px);
+  background: #0f0f1e;
+  border: 3px solid #b026ff;
+  border-radius: 12px;
+}
+
+.table-visual {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: #16213e;
+  border: 3px solid #b026ff;
+  padding: 15px;
+}
+
+.table-visual.square {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+}
+
+.table-visual.circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.table-visual.available {
+  border-color: #39ff14;
+  background: #16213e;
+}
+
+.table-visual.occupied {
+  border-color: #ff3366;
+  background: #2a1a1e;
+}
+
+.table-visual:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(176, 38, 255, 0.6);
+}
+
+.table-label {
+  color: #e0e0e0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.table-seats {
+  color: #666;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  margin-top: 5px;
+}

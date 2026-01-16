@@ -1,0 +1,267 @@
+.order-panel {
+  width: 40%;
+  padding: 20px;
+  border-right: 2px solid #b026ff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.order-panel h2 {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: #39ff14;
+  background: #16213e;
+  padding: 15px;
+  border: 2px solid #b026ff;
+  border-radius: 8px;
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.notification-bar {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px 0;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.notification-default {
+  background: #2a2a4a;
+  color: #e0e0e0;
+  border: 2px solid #b026ff;
+}
+
+.notification-success {
+  background: #39ff14;
+  color: #1a1a2e;
+  animation: pulse 1s infinite;
+}
+
+.notification-timer {
+  background: #39ff14;
+  color: #1a1a2e;
+  animation: pulse 1s infinite;
+}
+
+.notification-locked {
+  background: #ff3366;
+  color: #fff;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.order-items-list {
+  margin-top: 20px;
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  max-height: 35vh;
+  min-height: 35vh;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #16213e;
+  border: 2px solid #b026ff;
+  border-radius: 8px;
+}
+
+.order-item span:first-child {
+  color: #e0e0e0;
+  flex: 1;
+}
+
+.order-item span:last-child {
+  color: #39ff14;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.order-item.locked {
+  opacity: 0.5;
+  background: #0f0f1e;
+  border-color: #666;
+}
+
+.order-item.locked span {
+  color: #888;
+}
+
+.order-item.saved-draft {
+  border-color: #ffd700;
+  background: #2a2419;
+}
+
+.order-item.saved-draft span {
+  color: #ffd700;
+}
+
+.lock-icon {
+  margin-right: 8px;
+  color: #ff3366;
+  flex-shrink: 0;
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: #ff3366;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 10px;
+  margin-left: 15px;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.btn-remove:hover {
+  color: #ff0044;
+  transform: scale(1.2);
+}
+
+.order-totals {
+  padding-top: 20px;
+  border-top: 2px solid #b026ff;
+  flex-shrink: 0;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  color: #e0e0e0;
+}
+
+.total-row.total {
+  font-size: 20px;
+  font-weight: bold;
+  color: #39ff14;
+  border-top: 1px solid #666;
+  margin-top: 10px;
+  padding-top: 15px;
+}
+
+.order-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.order-actions button {
+  flex: 1;
+  padding: 15px;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-save {
+  background: #2a2a4a;
+  color: #e0e0e0;
+  border: 2px solid #b026ff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+}
+
+.btn-save:hover {
+  background: #3a3a5a;
+}
+
+.btn-send {
+  background: #39ff14;
+  color: #1a1a2e;
+  border: 2px solid #39ff14;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 12px;
+}
+
+.btn-send:hover {
+  background: #2ee00f;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+.menu-panel {
+  width: 60%;
+  padding: 20px;
+}
+
+.category-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-tab {
+  padding: 12px 20px;
+  background: transparent;
+  border: 2px solid #b026ff;
+  color: #e0e0e0;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.category-tab:hover {
+  background: #b026ff;
+  color: #1a1a2e;
+}
+
+.category-tab.active {
+  background: #b026ff;
+  color: #1a1a2e;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.menu-item-card {
+  background: #16213e;
+  border: 2px solid #b026ff;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.menu-item-card:hover {
+  background: #1f2d50;
+  box-shadow: 0 0 20px rgba(176, 38, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.menu-item-card h3 {
+  color: #39ff14;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.menu-item-card .price {
+  color: #39ff14;
+  font-size: 18px;
+  font-weight: bold;
+}

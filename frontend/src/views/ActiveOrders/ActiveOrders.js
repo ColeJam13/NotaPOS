@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import NavBar from './NavBar';
-import './App.css';
+import NavBar from '../../components/NavBar/NavBar';
+import './ActiveOrders.css';
 
 function ActiveOrders({ setCurrentView }) {
   const [view, setView] = useState('FOH');

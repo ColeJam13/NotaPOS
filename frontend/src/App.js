@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import CreateOrder from './CreateOrder';
-import ActiveOrders from './ActiveOrders';
-import FloorMap from './FloorMap';
-import ActiveTables from './ActiveTables';
+import Home from './views/Home';
+import CreateOrder from './views/CreateOrder';
+import ActiveOrders from './views/ActiveOrders';
+import FloorMap from './views/FloorMap';
+import ActiveTables from './views/ActiveTables';
 import './App.css';
 
 function App() {
@@ -22,41 +23,10 @@ function App() {
   }
 
   if (currentView === 'activeTables') {
-  return <ActiveTables setCurrentView={setCurrentView} setSelectedTable={setSelectedTable} />;
+    return <ActiveTables setCurrentView={setCurrentView} setSelectedTable={setSelectedTable} />;
   }
 
-  return (
-    <div className="landing-page">
-      <h1 className="landing-logo">NOTA-POS</h1>
-
-      <div className="landing-buttons">
-                <button
-          className="landing-btn"
-          onClick={() => setCurrentView('floorMap')}
-        >
-          FLOOR MAP
-        </button>
-        <button
-          className="landing-btn"
-          onClick={() => setCurrentView('activeTables')}
-        >
-          ACTIVE TABLES
-        </button>
-        <button
-          className="landing-btn"
-          onClick={() => setCurrentView('createOrder')}
-        >
-          CREATE ORDER
-        </button>
-        <button
-          className="landing-btn"
-          onClick={() => setCurrentView('activeOrders')}
-        >
-          ACTIVE ORDERS
-        </button>
-      </div>
-    </div>
-  );
+  return <Home setCurrentView={setCurrentView} />;
 }
 
 export default App;
